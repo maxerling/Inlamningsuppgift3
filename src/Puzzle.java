@@ -61,4 +61,8 @@ public class Puzzle extends JFrame {
         pack();
 
     }
+
+    public static void main(String[] args) {
+        new Puzzle(4);
+    }
 }
