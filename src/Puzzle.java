@@ -54,5 +54,11 @@ public class Puzzle extends JFrame {
         }
         //shuffle();
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocation(500, 500);
+        setVisible(true);
+        setResizable(false);
+        pack();
+
     }
 }
