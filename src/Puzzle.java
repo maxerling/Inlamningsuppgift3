@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -144,6 +145,34 @@ public class Puzzle extends JFrame {
         return true;
     }
 
+
+    public void shuffle() {
+        ArrayList<String> list = new ArrayList<>();
+        int name = random.nextInt(size*size - 1) + 1;
+
+        for (int y = 0; y < size; y++) {
+            for (int u = 0; u < size; u++) {
+
+                if (!buttons[y][u].getText().equalsIgnoreCase("")) {
+
+                    while (true) {
+                        if (!list.contains(String.valueOf(name))) {
+                            buttons[y][u].setText(String.valueOf(name));
+                            break;
+
+                        } else {
+                            name = random.nextInt(size*size - 1) + 1;
+                        }
+                    }
+
+                    list.add(String.valueOf(name));
+
+                }
+
+
+            }
+        }
+    }
 
 
 }
