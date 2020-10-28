@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
@@ -65,4 +67,57 @@ public class Puzzle extends JFrame {
     public static void main(String[] args) {
         new Puzzle(4);
     }
+
+    class buttonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == newGame) {
+                shuffle();
+            }
+
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++) {
+                    if (e.getSource() == buttons[i][j]) {
+                        String s = buttons[i][j].getText();
+
+
+                        if (i != 0) {
+                            if (buttons[i - 1][j].getText().equalsIgnoreCase("")) {
+                                buttons[i - 1][j].setText(s);
+                                buttons[i][j].setText("");
+                            }
+                        }
+
+
+                        if (i != size - 1) {
+                            if (buttons[i + 1][j].getText().equals("")) {
+                                buttons[i + 1][j].setText(s);
+                                buttons[i][j].setText("");
+                            }
+                        }
+
+                        if (j != 0) {
+                            if (buttons[i][j - 1].getText().equalsIgnoreCase("")) {
+                                buttons[i][j - 1].setText(s);
+                                buttons[i][j].setText("");
+                            }
+                        }
+
+                        if (j != size - 1) {
+                            if (buttons[i][j + 1].getText().equals("")) {
+                                buttons[i][j + 1].setText(s);
+                                buttons[i][j].setText("");
+
+                            }
+                        }
+                    }
+
+                }
+
+            if (isSolved()) {
+                JOptionPane.showMessageDialog(null, "Grattis, du vann!");
+            }
+        }
+    }
+
 }
