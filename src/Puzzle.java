@@ -26,8 +26,8 @@ public class Puzzle extends JFrame {
         JPanel gridPanel = new JPanel(new GridLayout(size, size));
 
         newGame.setBackground(Color.white);
-        //buttonListener l = new buttonListener();
-        //newGame.addActionListener(l);
+        buttonListener l = new buttonListener();
+        newGame.addActionListener(l);
 
         sidePanel.add(newGame);
 
@@ -37,12 +37,12 @@ public class Puzzle extends JFrame {
 
         add(mainPanel);
 
-        String[] numberOrder = new String[size*size];
+        String[] numberOrder = new String[size * size];
         for (int i = 0; i < numberOrder.length; i++) {
             numberOrder[i] = String.valueOf(i + 1);
         }
-        numberOrder[size*size-1] = String.valueOf(size*size-1);
-        numberOrder[size*size-2] = "";
+        numberOrder[size * size - 1] = String.valueOf(size * size - 1);
+        numberOrder[size * size - 2] = "";
 
         int x = 0;
         for (int i = 0; i < size; i++) {
@@ -51,11 +51,11 @@ public class Puzzle extends JFrame {
                 buttons[i][j].setBackground(Color.white);
                 buttons[i][j].setForeground(Color.blue);
                 buttons[i][j].setPreferredSize(new Dimension(50, 50));
-                //buttons[i][j].addActionListener(l);
+                buttons[i][j].addActionListener(l);
                 gridPanel.add(buttons[i][j]);
             }
         }
-        //shuffle();
+        shuffle();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(500, 500);
@@ -67,6 +67,58 @@ public class Puzzle extends JFrame {
 
     public static void main(String[] args) {
         new Puzzle(4);
+    }
+
+    public boolean isSolved() {
+        int num = 0;
+
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++) {
+
+                String m = buttons[i][j].getText();
+
+                num++;
+
+                if (!m.equalsIgnoreCase("")) {
+
+                    int a = Integer.parseInt(m);
+
+                    if (a != num) {
+
+                        return false;
+                    }
+                }
+            }
+
+        return true;
+    }
+
+    public void shuffle() {
+        ArrayList<String> list = new ArrayList<>();
+        int name = random.nextInt(size * size - 1) + 1;
+
+        for (int y = 0; y < size; y++) {
+            for (int u = 0; u < size; u++) {
+
+                if (!buttons[y][u].getText().equalsIgnoreCase("")) {
+
+                    while (true) {
+                        if (!list.contains(String.valueOf(name))) {
+                            buttons[y][u].setText(String.valueOf(name));
+                            break;
+
+                        } else {
+                            name = random.nextInt(size * size - 1) + 1;
+                        }
+                    }
+
+                    list.add(String.valueOf(name));
+
+                }
+
+
+            }
+        }
     }
 
     class buttonListener implements ActionListener {
@@ -117,59 +169,6 @@ public class Puzzle extends JFrame {
 
             if (isSolved()) {
                 JOptionPane.showMessageDialog(null, "Grattis, du vann!");
-            }
-        }
-    }
-
-    public boolean isSolved() {
-        int num = 0;
-
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++) {
-
-                String m = buttons[i][j].getText();
-
-                num++;
-
-                if (!m.equalsIgnoreCase("")) {
-
-                    int a = Integer.parseInt(m);
-
-                    if (a != num) {
-
-                        return false;
-                    }
-                }
-            }
-
-        return true;
-    }
-
-
-    public void shuffle() {
-        ArrayList<String> list = new ArrayList<>();
-        int name = random.nextInt(size*size - 1) + 1;
-
-        for (int y = 0; y < size; y++) {
-            for (int u = 0; u < size; u++) {
-
-                if (!buttons[y][u].getText().equalsIgnoreCase("")) {
-
-                    while (true) {
-                        if (!list.contains(String.valueOf(name))) {
-                            buttons[y][u].setText(String.valueOf(name));
-                            break;
-
-                        } else {
-                            name = random.nextInt(size*size - 1) + 1;
-                        }
-                    }
-
-                    list.add(String.valueOf(name));
-
-                }
-
-
             }
         }
     }
